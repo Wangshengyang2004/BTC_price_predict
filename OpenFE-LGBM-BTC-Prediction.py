@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report, accuracy_score
+from sklearn.preprocessing import MinMaxScaler
 
 # Read the CSV file
 btc_data = pd.read_csv("data-BTC-USDT-from-2022-09-01-to-2023-10-05.csv")
@@ -53,7 +54,12 @@ btc_data[technical_indicator_columns] = btc_data[technical_indicator_columns].fi
 btc_data = btc_data.dropna(subset=['price_direction'])
 
 # Feature Selection
-feature_columns = ['macd', 'signal_line', 'macd_histogram', 'ema_12', 'ema_26']
+feature_columns = ['Close','macd', 'signal_line', 'macd_histogram', 'ema_12', 'ema_26']
+
+scaler = MinMaxScaler(feature_range=(-1, 1))
+for col in feature_columns:
+    btc_data[col] = scaler.fit_transform(btc_data[col].values.reshape(-1,1))
+
 X = btc_data[feature_columns]
 y = btc_data['price_direction']
 
