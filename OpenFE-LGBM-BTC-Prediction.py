@@ -44,7 +44,8 @@ btc_data['macd_histogram'] = btc_data['macd'] - btc_data['signal_line']
 # More Technical Indicators Here...
 
 # Label Creation: Example - Price Direction
-btc_data['price_direction'] = (btc_data['Close'].shift(-1) >= btc_data['Close']).astype(int)
+btc_data['price_direction'] = np.where(btc_data['Close'].shift(-1) > btc_data['Close'], 1, 0)
+
 
 # Handle Missing Values for Technical Indicators
 technical_indicator_columns = ['ema_12', 'ema_26', 'macd', 'signal_line', 'macd_histogram']
