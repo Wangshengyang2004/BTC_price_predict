@@ -73,7 +73,7 @@ ofe = OpenFE()
 n_jobs = 8
 
 # generate new features
-features = ofe.fit(data=train_x, label=train_y, n_jobs=n_jobs)
+features = ofe.fit(data=train_x, label=train_y, n_jobs=n_jobs,min_candidate_features=30000,task='classification')
 # transform the train and test data according to generated features. 
 train_x, test_x = transform(train_x, test_x, features, n_jobs=n_jobs) 
 
